@@ -1,0 +1,43 @@
+public class EnEspera implements State{
+    private VehMos vehmos;
+
+    public EnEspera(VehMos vehmos){
+        super(vehmos);
+    }
+
+    @Override
+    public void verificaID(){
+
+    }
+
+    @Override
+    public void seguirRuta(){
+
+    }
+
+    @Override
+    public void sinCombustible(){
+
+    }
+
+    @Override
+    public void recargar(){
+
+    }
+
+    @Override
+    public void verificarUbicacion(){
+
+    }
+
+    @Override
+    public void finalizaViaje(){
+
+    }
+
+    @Override
+    public void buscarViaje(){
+
+    }
+
+}
