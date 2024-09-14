@@ -25,5 +25,8 @@ public abstract class VehMos implements State{
     public void limiteDeTuning(int numerolimite){};
     public void getModificacion(){};
     public void calcularDistancia(){};
+    //obtener estado y actualizar estado
+    public State getState(){};
+    public void setState(State state){};
     
 }
