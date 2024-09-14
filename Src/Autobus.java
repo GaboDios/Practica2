@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 public class Autobus extends VehMos {
     public Autobus() {
         super();
-        setDescripcion("Autobús para carretera");
+        setDescripcion("Autobús");
     }
 
     @Override
@@ -15,8 +15,8 @@ public class Autobus extends VehMos {
     }
 
     @Override
-    public void costoViaje() {
-        System.out.println("El costo del viaje en autobús es de 50 pesos.");
+    public double costoViaje() {
+        return 49.99;
     }
 
     @Override
@@ -39,5 +39,12 @@ public class Autobus extends VehMos {
             return "no";
         }
         return respuesta;
+    }
+    public void seguirRuta() {
+        if (clienteRequiereTerraceria()) {
+            System.out.println("Siguiendo la ruta por terracería.");
+        } else {
+            System.out.println("Siguiendo la ruta por carretera.");
+        }
     }
 }

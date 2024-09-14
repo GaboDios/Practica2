@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 public class Carro extends VehMos {
     public Carro() {
         super();
-        setDescripcion("Carro para carretera y terracería");
+        setDescripcion("Carro común y corriente");
     }
 
     @Override
@@ -15,8 +15,8 @@ public class Carro extends VehMos {
     }
 
     @Override
-    public void costoViaje() {
-        System.out.println("El costo del viaje en coche es de 30 pesos.");
+    public double costoViaje() {
+        return 29.99;
     }
 
     @Override
@@ -39,5 +39,12 @@ public class Carro extends VehMos {
             return "no";
         }
         return respuesta;
+    }
+    public void seguirRuta() {
+        if (clienteRequiereTerraceria()) {
+            System.out.println("Siguiendo la ruta por terracería.");
+        } else {
+            System.out.println("Siguiendo la ruta por carretera.");
+        }
     }
 }

@@ -6,7 +6,7 @@ public abstract class VehMos {
     // Atributos de cada vehículo
     private int cantidadCombustible;
     private double tiempoDeLlegada;
-    private String descripcion;
+    String descripcion = "Vehiculo Vehmos";
     
     private State enEspera;
     private State comenzarViaje;
@@ -51,7 +51,7 @@ public abstract class VehMos {
     
     // Parte de template
     public abstract void recargarCombustible();
-    public abstract void costoViaje();
+    public abstract double costoViaje();
     public abstract boolean clienteRequiereTerraceria();
     
     // Métodos de gestión de atributos
@@ -78,10 +78,6 @@ public abstract class VehMos {
     // Métodos adicionales
     public void limiteDeTuning(int numerolimite) {
         // Implementar la lógica de límite de tuning aquí
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
     
     public String getDescripcion() {
@@ -136,5 +132,8 @@ public abstract class VehMos {
             return "no";
         }
         return answer;
+    }
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

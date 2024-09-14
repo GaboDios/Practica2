@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 public class Vehiculo4x4 extends VehMos {
     public Vehiculo4x4() {
         super();
-        setDescripcion("Vehículo 4x4 para terracería");
+        setDescripcion("Vehículo 4x4");
     }
 
     @Override
@@ -15,8 +15,8 @@ public class Vehiculo4x4 extends VehMos {
     }
 
     @Override
-    public void costoViaje() {
-        System.out.println("El costo del viaje en vehículo 4x4 es de 40 pesos.");
+    public double costoViaje() {
+        return 39.99;
     }
 
     @Override
@@ -39,5 +39,12 @@ public class Vehiculo4x4 extends VehMos {
             return "no";
         }
         return respuesta;
+    }
+    public void seguirRuta() {
+        if (clienteRequiereTerraceria()) {
+            System.out.println("Siguiendo la ruta por terracería.");
+        } else {
+            System.out.println("Siguiendo la ruta por carretera.");
+        }
     }
 }

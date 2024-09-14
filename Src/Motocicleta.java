@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 public class Motocicleta extends VehMos {
     public Motocicleta() {
         super();
-        setDescripcion("Motocicleta para terracería");
+        setDescripcion("Motocicleta");
     }
 
     @Override
@@ -16,8 +16,8 @@ public class Motocicleta extends VehMos {
     }
 
     @Override
-    public void costoViaje() {
-        System.out.println("El costo del viaje en motocicleta es de 20 pesos.");
+    public double costoViaje() {
+        return 19.99;
     }
 
     @Override
@@ -40,5 +40,12 @@ public class Motocicleta extends VehMos {
             return "no";
         }
         return respuesta;
+    }
+    public void seguirRuta() {
+        if (clienteRequiereTerraceria()) {
+            System.out.println("Siguiendo la ruta por terracería.");
+        } else {
+            System.out.println("Siguiendo la ruta por carretera.");
+        }
     }
 }
