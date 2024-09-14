@@ -1,3 +1,14 @@
 public abstract class TunningDecorator extends VehMos {
-    public abstract String getDescripcion();
+    protected VehMos vehiculo;  // El objeto que está siendo decorado
+
+    public TunningDecorator(VehMos vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    @Override
+    public String getDescripcion() {
+        return vehiculo.getDescripcion();
+    }
+
+    // Otros métodos pueden delegarse al objeto vehiculo
 }
