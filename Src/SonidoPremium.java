@@ -5,7 +5,7 @@ public class SonidoPremium extends TunningDecorator {
      }
      @Override
      public String getDescripcion(){
-         return vehiculo.getDescripcion() + ", con sonidoPremium.";
+         return vehiculo.getDescripcion() + ", con sonidoPremium";
      }
      
      public double costoViaje(){

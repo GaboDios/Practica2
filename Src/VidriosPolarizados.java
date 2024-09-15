@@ -5,7 +5,7 @@ public class VidriosPolarizados extends TunningDecorator {
      }
      @Override
      public String getDescripcion(){
-         return vehiculo.getDescripcion() + ", con vidrios polarizados.";
+         return vehiculo.getDescripcion() + ", con vidrios polarizados";
      }
      
      public double costoViaje(){

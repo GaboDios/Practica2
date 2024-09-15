@@ -4,14 +4,14 @@ import java.io.InputStreamReader;
 
 public class Vehiculo4x4 extends VehMos {
     public Vehiculo4x4() {
-        super();
+        super(85,0.125);// 85 litros de combustible y consume 0.125 litros por KM
         setDescripcion("Vehículo 4x4");
     }
 
     @Override
     public void recargarCombustible() {
         System.out.println("Recargando gasolina para el vehículo 4x4...");
-        setCantidadCombustible(100);
+        setCantidadCombustible(85);
     }
 
     @Override

@@ -4,7 +4,7 @@ public class LucesLed extends TunningDecorator {
      }
      @Override
      public String getDescripcion(){
-         return vehiculo.getDescripcion() + ", con luces led.";
+         return vehiculo.getDescripcion() + ", con luces led";
      }
      
      public double costoViaje(){

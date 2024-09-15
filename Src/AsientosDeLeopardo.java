@@ -5,7 +5,7 @@ public class AsientosDeLeopardo extends TunningDecorator {
     }
     @Override
     public String getDescripcion(){
-        return vehiculo.getDescripcion() + ", con asientos de Leopardo.";
+        return vehiculo.getDescripcion() + ", con asientos de Leopardo";
     }
     
     public double costoViaje(){

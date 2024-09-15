@@ -5,7 +5,7 @@ public class Sirena extends TunningDecorator {
      }
      @Override
      public String getDescripcion(){
-         return vehiculo.getDescripcion() + ", con sirena.";
+         return vehiculo.getDescripcion() + ", con sirena";
      }
      
      public double costoViaje(){

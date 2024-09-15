@@ -5,7 +5,7 @@ public class Aromatizador extends TunningDecorator {
      }
      @Override
      public String getDescripcion(){
-         return vehiculo.getDescripcion() + ", con aromatizador.";
+         return vehiculo.getDescripcion() + ", con aromatizador";
      }
      
      public double costoViaje(){

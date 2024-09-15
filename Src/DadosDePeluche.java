@@ -5,7 +5,7 @@ public class DadosDePeluche extends TunningDecorator {
      }
      @Override
      public String getDescripcion(){
-         return vehiculo.getDescripcion() + ", con Dados de peluche.";
+         return vehiculo.getDescripcion() + ", con Dados de peluche";
      }
      
      public double costoViaje(){

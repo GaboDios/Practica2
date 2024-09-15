@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 public abstract class VehMos {
     // Atributos de cada vehículo
     private int cantidadCombustible;
+    private double consumoPorKm;
     private double tiempoDeLlegada;
     String descripcion = "Vehiculo Vehmos";
     
@@ -16,8 +17,9 @@ public abstract class VehMos {
     private State estadoActual;
     
     // Constructor y métodos que comparten todos los vehículos
-    public VehMos() {
-        this.cantidadCombustible = 100;
+    public VehMos(int cantidadCombustible, double consumoPorKm) {
+        this.cantidadCombustible = cantidadCombustible;
+        this.consumoPorKm = consumoPorKm;
         // Inicialización de estados
         enEspera = new EnEspera(this);
         comenzarViaje = new ComenzarViaje(this);
@@ -66,7 +68,7 @@ public abstract class VehMos {
     public void setCantidadCombustible(int combustible) {
         this.cantidadCombustible = 100;
         // Si la cantidad de combustible es menor a 80, cambiar al estado de alerta
-        if (this.cantidadCombustible < 80 && !(estadoActual instanceof AlertaDeCombustible)) {
+        if (this.cantidadCombustible < 10 && !(estadoActual instanceof AlertaDeCombustible)) {
             setState(alertaDeCombustible);
         }
     }
@@ -74,6 +76,8 @@ public abstract class VehMos {
     public int getCantidadCombustible() {
         return this.cantidadCombustible;
     }
+
+    public double getConsumoPorKm(){return this.consumoPorKm;}
     
     // Métodos adicionales
     public void limiteDeTuning(int numerolimite) {
@@ -136,4 +140,22 @@ public abstract class VehMos {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    // Método para calcular cuántos kilómetros puede recorrer antes de quedarse sin combustible
+    public double calcularKmRestantes() {
+        return cantidadCombustible / consumoPorKm;
+    }
+
+    // Método para reducir el combustible cuando el vehículo avanza
+    public void consumirCombustible(double distancia) {
+        double combustibleNecesario = distancia * consumoPorKm;
+        if (combustibleNecesario > cantidadCombustible) {
+            System.out.println("El vehículo no tiene suficiente combustible para continuar el viaje.");
+            cantidadCombustible = 0;  // El vehículo se queda sin combustible
+        } else {
+            cantidadCombustible -= combustibleNecesario;
+            System.out.println("Combustible restante: " + cantidadCombustible + " litros/kWh");
+        }
+    }
+
 }

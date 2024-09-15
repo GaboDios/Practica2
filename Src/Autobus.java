@@ -4,14 +4,14 @@ import java.io.InputStreamReader;
 
 public class Autobus extends VehMos {
     public Autobus() {
-        super();
+        super(250,.5); // 250 litros de combustible y consume 0.5 litros por KM
         setDescripcion("Autobús");
     }
 
     @Override
     public void recargarCombustible() {
         System.out.println("Recargando gasolina para el autobús...");
-        setCantidadCombustible(100);
+        setCantidadCombustible(250);
     }
 
     @Override

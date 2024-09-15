@@ -32,4 +32,9 @@ public class ZMVM {
             System.out.println(punto + ": " + puntosDeInteres.get(punto));
         }
     }
+
+    // Método para obtener el mapa de puntos de interés
+    public Map<String, Coordenadas> getPuntosDeInteres() {
+        return puntosDeInteres;
+    }
 }

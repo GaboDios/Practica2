@@ -76,6 +76,12 @@ public class SimuladorViaje {
             System.out.println("4. Mega Suspensión");
             System.out.println("5. Sirena");
             System.out.println("6. Portavasos");
+            System.out.println("7. Aromatizador");
+            System.out.println("8. Asientos de Leopardo");
+            System.out.println("9. Dados de Peluche");
+            System.out.println("10. Luces Led");
+            System.out.println("11. Sonido Premium");
+            System.out.println("12. TV");
 
             for (int i = 0; i < 6; i++) {
                 System.out.print("Seleccione el número del aditamento (0 para terminar): ");
@@ -105,6 +111,23 @@ public class SimuladorViaje {
                     case 6:
                         vehiculoSeleccionado = new Portavasos(vehiculoSeleccionado);
                         break;
+                    case 7:
+                        vehiculoSeleccionado = new Aromatizador(vehiculoSeleccionado);
+                        break;
+                    case 8:
+                        vehiculoSeleccionado = new AsientosDeLeopardo(vehiculoSeleccionado);
+                        break;
+                    case 9:
+                        vehiculoSeleccionado = new DadosDePeluche(vehiculoSeleccionado);
+                        break;
+                    case 10:
+                        vehiculoSeleccionado = new LucesLed(vehiculoSeleccionado);
+                        break;
+                    case 11:
+                        vehiculoSeleccionado = new SonidoPremium(vehiculoSeleccionado);
+                        break;
+                    case 12:
+                        vehiculoSeleccionado = new Tv(vehiculoSeleccionado);
                     default:
                         System.out.println("Aditamento no válido.");
                 }
@@ -116,16 +139,25 @@ public class SimuladorViaje {
     public static Coordenadas seleccionarDestino(Scanner scanner) {
         System.out.println("Seleccione uno de los puntos de interés:");
 
-        zona.mostrarPuntosDeInteres();
-        System.out.print("Ingrese el nombre del punto de interés: ");
-        String seleccion = scanner.nextLine();
+        // Mostrar la lista de puntos de interés sin mostrar las coordenadas
+        List<String> destinos = new ArrayList<>(zona.getPuntosDeInteres().keySet());
 
-        Coordenadas destino = zona.obtenerCoordenadas(seleccion);
-        if (destino == null) {
-            System.out.println("Punto de interés no válido. Se selecciona el Zócalo de CDMX por defecto.");
-            destino = new Coordenadas(19.432608, -99.133209);  // Coordenadas del Zócalo
+        for (int i = 0; i < destinos.size(); i++) {
+            System.out.println((i + 1) + ". " + destinos.get(i));
         }
-        return destino;
+
+        int seleccion = 0;
+        do {
+            System.out.print("Ingrese el número del destino: ");
+            seleccion = scanner.nextInt();
+            scanner.nextLine();  // Consumir la nueva línea
+            if (seleccion < 1 || seleccion > destinos.size()) {
+                System.out.println("Selección no válida, intente de nuevo.");
+            }
+        } while (seleccion < 1 || seleccion > destinos.size());
+
+        String destinoSeleccionado = destinos.get(seleccion - 1);
+        return zona.obtenerCoordenadas(destinoSeleccionado);
     }
 
     // Método para simular el viaje
@@ -137,14 +169,22 @@ public class SimuladorViaje {
         double tiempoDeViaje = distancia / 50;  // Asumiendo una velocidad promedio de 50 km/h
         System.out.println("Distancia: " + distancia + " km");
         System.out.println("El tiempo estimado de llegada es: " + tiempoDeViaje + " horas");
+        double dist_recorrida = 0;
 
-        // Verificar si el vehículo se queda sin combustible (ejemplo simple)
-        if (vehiculoSeleccionado.getCantidadCombustible() < distancia) {
-            System.out.println("El vehículo se quedó sin combustible. Se realizará una parada para recargar.");
-            // Aquí podrías implementar la lógica de recarga dependiendo del tipo de combustible
-        } else {
-            System.out.println("El vehículo ha completado el viaje sin problemas.");
-        }
+        // Consumo de combustible por la distancia recorrida
+        do {
+            if ((vehiculoSeleccionado.calcularKmRestantes()+dist_recorrida) < distancia) {
+                System.out.println("El vehículo no tiene suficiente combustible para completar el viaje.");
+                vehiculoSeleccionado.consumirCombustible(vehiculoSeleccionado.calcularKmRestantes());
+                System.out.println("Debe realizar una parada para recargar combustible.");
+                vehiculoSeleccionado.recargarCombustible();
+                dist_recorrida = dist_recorrida + vehiculoSeleccionado.calcularKmRestantes();
+            } else {
+                vehiculoSeleccionado.consumirCombustible(distancia);
+                System.out.println("El vehículo ha completado el viaje sin problemas.");
+                dist_recorrida=distancia;
+            }
+        }while (dist_recorrida<distancia);
     }
 
     // Método para calcular la distancia entre dos puntos

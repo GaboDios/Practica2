@@ -5,7 +5,7 @@ public class FarosDeNiebla extends TunningDecorator {
      }
      @Override
      public String getDescripcion(){
-         return vehiculo.getDescripcion() + ", con faros para niebla.";
+         return vehiculo.getDescripcion() + ", con faros para niebla";
      }
      
      public double costoViaje(){

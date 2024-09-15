@@ -4,14 +4,14 @@ import java.io.InputStreamReader;
 
 public class Scooter extends VehMos {
     public Scooter() {
-        super();
+        super(8,0.033);// 8 litros de combustible y consume 0.033 litros por KM
         setDescripcion("Scooter");
     }
 
     @Override
     public void recargarCombustible() {
         System.out.println("Recargando gasolina para la scooter...");
-        setCantidadCombustible(100);
+        setCantidadCombustible(8);
     }
 
     @Override

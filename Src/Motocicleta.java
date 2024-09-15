@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 
 public class Motocicleta extends VehMos {
     public Motocicleta() {
-        super();
+        super(15,0.04); // 15 litros de combustible y consume 0.04 litros por KM
         setDescripcion("Motocicleta");
     }
 
@@ -12,7 +12,7 @@ public class Motocicleta extends VehMos {
     public void recargarCombustible() {
         System.out.println("Recargando gasolina para la motocicleta...");
         // Lógica para recargar gasolina
-        setCantidadCombustible(100); // Restablece el combustible a 100 después de recargar
+        setCantidadCombustible(15); // Restablece el combustible a 100 después de recargar
     }
 
     @Override

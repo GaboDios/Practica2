@@ -5,7 +5,7 @@ public class Tv extends TunningDecorator {
      }
      @Override
      public String getDescripcion(){
-         return vehiculo.getDescripcion() + ", con television.";
+         return vehiculo.getDescripcion() + ", con television";
      }
 
      
