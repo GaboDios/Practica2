@@ -1,17 +1,33 @@
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * La clase ZMVM representa una serie de puntos de interés en la Zona Metropolitana
+ * del Valle de México. Permite almacenar y recuperar las coordenadas geográficas
+ * de dichos puntos de interés mediante el uso de un mapa.
+ *
+ * La clase contiene un conjunto de ubicaciones predefinidas como el Zócalo, Polanco,
+ * entre otros, y permite obtener las coordenadas de estos lugares.
+ *
+ * @author Los hijos de Korhal
+ */
 public class ZMVM {
-    // Mapa para almacenar puntos de interés y sus coordenadas
     private Map<String, Coordenadas> puntosDeInteres;
 
-    // Constructor para inicializar los puntos de interés
+    /**
+     * Constructor que inicializa el mapa de puntos de interés y los carga
+     * con sus respectivas coordenadas.
+     */
     public ZMVM() {
         puntosDeInteres = new HashMap<>();
         cargarPuntosDeInteres();  // Cargar las ciudades y sus coordenadas
     }
 
-    // Método para cargar las ciudades y sus coordenadas
+    /**
+     * Carga los puntos de interés en el mapa con sus respectivas coordenadas geográficas.
+     * Este método es privado y se llama automáticamente durante la creación de la instancia
+     * de la clase ZMVM.
+     */
     private void cargarPuntosDeInteres() {
         puntosDeInteres.put("Zócalo", new Coordenadas(19.432608, -99.133209));
         puntosDeInteres.put("Polanco", new Coordenadas(19.4325, -99.2005));
@@ -26,12 +42,22 @@ public class ZMVM {
         puntosDeInteres.put("Xochicalco", new Coordenadas(18.8089, -99.2819));
     }
 
-    // Método para obtener las coordenadas de una ciudad por su nombre
+    /**
+     * Obtiene las coordenadas de un punto de interes dado su nombre.
+     *
+     * @param ciudad El nombre de la ciudad o punto de interés cuyo par de coordenadas se desea obtener.
+     * @return Las coordenadas de la ciudad si está en el mapa, o null si no se encuentra.
+     */
     public Coordenadas obtenerCoordenadas(String ciudad) {
         return puntosDeInteres.get(ciudad);
     }
 
-    // Método para obtener el mapa completo de puntos de interés (por si es necesario)
+    /**
+     * Devuelve el mapa completo de puntos de interés junto con sus coordenadas.
+     * Esto puede ser útil si se desea obtener el conjunto completo de datos.
+     *
+     * @return Un mapa que contiene los nombres de los puntos de interés como claves y sus coordenadas como valores.
+     */
     public Map<String, Coordenadas> getPuntosDeInteres() {
         return puntosDeInteres;
     }

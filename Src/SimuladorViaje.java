@@ -3,6 +3,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * La clase SimuladorViaje simula un viaje en un vehículo con múltiples opciones de personalización
+ * y aditamentos. Los usuarios pueden seleccionar un vehículo, agregar modificaciones (tuning),
+ * y elegir un destino de viaje. El programa simula el viaje, gestionando el combustible, la distancia,
+ * y el estado del vehículo durante el trayecto.
+ *
+ * La clase también implementa una verificación de cliente por ID, el cálculo de distancia entre puntos
+ * y la recarga de combustible si es necesario.
+ *
+ * El simulador sigue el patrón de diseño **State**, donde el comportamiento del vehículo cambia
+ * dependiendo de su estado actual (En movimiento, En espera, Alerta de combustible, etc.).
+ *
+ * @author Los Hijos de Korhal
+ */
 public class SimuladorViaje {
 
     private static VehMos vehiculoSeleccionado;
@@ -10,6 +24,12 @@ public class SimuladorViaje {
     private static ZMVM zona;
     private static int idCliente;
 
+    /**
+     * Método principal que inicia el simulador. Solicita al usuario su nombre, selecciona el vehículo,
+     * permite modificarlo con aditamentos, elige un destino y simula el viaje.
+     *
+     * @param args Argumentos de línea de comando (no se utilizan).
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         zona = new ZMVM();
@@ -33,6 +53,11 @@ public class SimuladorViaje {
         scanner.close();
     }
 
+    /**
+     * Solicita el nombre del cliente y genera un ID aleatorio para el cliente.
+     *
+     * @param scanner Objeto Scanner para leer la entrada del usuario.
+     */
     public static void solicitarNombreCliente(Scanner scanner) {
         System.out.println("Por favor, ingrese su nombre:");
         String nombreCliente = scanner.nextLine();
@@ -43,12 +68,22 @@ public class SimuladorViaje {
         System.out.println("Hola " + nombreCliente + ", tu ID de cliente es: " + idCliente);
     }
 
+    /**
+     * Genera un ID aleatorio de cliente de 4 dígitos.
+     *
+     * @return Un número aleatorio entre 1000 y 9999.
+     */
     public static int generarIdAleatorio() {
         Random random = new Random();
         return 1000 + random.nextInt(9000);  // Genera un número entre 1000 y 9999
     }
 
-    // Método para seleccionar el vehículo
+    /**
+     * Permite al usuario seleccionar un vehículo de una lista de opciones predefinidas.
+     * Si la selección no es válida, se selecciona un carro por defecto.
+     *
+     * @param scanner Objeto Scanner para leer la entrada del usuario.
+     */
     public static void seleccionarVehiculo(Scanner scanner) {
         System.out.println("Seleccione su vehículo:");
         System.out.println("1. Carro");
@@ -85,7 +120,12 @@ public class SimuladorViaje {
         vehiculoSeleccionado.getState();
     }
 
-    // Método para modificar el vehículo
+    /**
+     * Permite al usuario modificar su vehículo con hasta 6 aditamentos.
+     * Los aditamentos modifican el comportamiento o la descripción del vehículo seleccionado.
+     *
+     * @param scanner Objeto Scanner para leer la entrada del usuario.
+     */
     public static void modificarVehiculo(Scanner scanner) {
         System.out.println("¿Desea modificar su vehículo con aditamentos? (s/n)");
         String respuesta = scanner.nextLine();
@@ -159,6 +199,13 @@ public class SimuladorViaje {
         }
     }
 
+    /**
+     * Permite al usuario seleccionar un destino de una lista de puntos de interés.
+     * Los destinos se muestran por nombre, y se obtiene las coordenadas del destino seleccionado.
+     *
+     * @param scanner Objeto Scanner para leer la entrada del usuario.
+     * @return Las coordenadas del destino seleccionado.
+     */
     public static Coordenadas seleccionarDestino(Scanner scanner) {
         System.out.println("Seleccione uno de los puntos de interés:");
 
@@ -184,7 +231,14 @@ public class SimuladorViaje {
     }
 
 
-    // Método para simular el viaje
+    /**
+     * Simula el viaje desde el origen hasta el destino seleccionado. Gestiona el estado del vehículo
+     * durante el viaje, verifica si el cliente ingresó correctamente su ID, y gestiona el consumo
+     * de combustible y la recarga si es necesario.
+     *
+     * @param destino Las coordenadas del destino del viaje.
+     * @param scanner Objeto Scanner para leer la entrada del usuario.
+     */
     public static void simularViaje(Coordenadas destino, Scanner scanner) {
         vehiculoSeleccionado.setIdClienteActual(idCliente);
         System.out.println("Por favor, ingrese nuevamente su ID de cliente para iniciar el viaje:");
@@ -232,14 +286,24 @@ public class SimuladorViaje {
         }
     }
 
-    // Método para calcular la distancia entre dos puntos
+    /**
+     * Calcula la distancia entre dos puntos usando sus coordenadas.
+     *
+     * @param origen Las coordenadas de origen.
+     * @param destino Las coordenadas de destino.
+     * @return La distancia entre el origen y el destino en kilómetros.
+     */
     public static double calcularDistancia(Coordenadas origen, Coordenadas destino) {
         double latDiff = destino.getLatitud() - origen.getLatitud();
         double lonDiff = destino.getLongitud() - origen.getLongitud();
         return Math.sqrt(latDiff * latDiff + lonDiff * lonDiff) * 111;  // Aproximación para convertir grados en km
     }
 
-    // Método para solicitar y establecer el ID del cliente
+    /**
+     * Solicita al usuario su ID de cliente y lo registra en el vehículo seleccionado.
+     *
+     * @param scanner Objeto Scanner para leer la entrada del usuario.
+     */
     public static void solicitarIdCliente(Scanner scanner) {
         System.out.println("Por favor, ingrese su ID de cliente:");
         int idCliente = scanner.nextInt();
