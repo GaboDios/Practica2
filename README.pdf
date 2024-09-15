@@ -8,6 +8,7 @@ Práctica: Práctica 2
 
 Sistema operativo utilizado:
 Se ha utilizado Linux para realizar la práctica, con la versión de Java "21.0.4".
+Para ejecutar el programa escriba en la terminal javac *.java y luego java SimuladorViaje.
 
 Patrones de diseño a utilizar:
 Template: Este patrón define el flujo general de acciones en un vehículo, como recargar combustible y seguir una ruta. Todos los vehículos comparten un flujo básico, pero cada uno tiene implementaciones específicas que dependen del tipo de vehículo. Además, se utiliza un método hook, llamado clienteRequiereTerraceria(), para preguntar al usuario si el trayecto será por terracería o por carretera. Este comportamiento personalizado se implementa en las clases concretas que heredan de VehMos, como Carro, Motocicleta, Vehiculo4x4, Autobus y Scooter.
