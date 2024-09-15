@@ -40,4 +40,8 @@ public class ViajeFinalizado implements State {
         System.out.println("Buscando nuevo viaje...");
         vehmos.setState(vehmos.getEnEspera());
     }
+    @Override
+    public String toString() {
+        return "Finalizando viaje";
+    }
 }

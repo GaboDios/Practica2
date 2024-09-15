@@ -1,31 +1,51 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SimuladorViaje {
 
     private static VehMos vehiculoSeleccionado;
     private static TuningCollection tuningCollection;
     private static ZMVM zona;
+    private static int idCliente;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         zona = new ZMVM();
         tuningCollection = new TuningCollection();
+        solicitarNombreCliente(scanner);
 
         // 1. Selección de Vehículo
         seleccionarVehiculo(scanner);
 
         // 2. Modificación del Vehículo
         modificarVehiculo(scanner);
+        vehiculoSeleccionado.encenderVehiculo(true);
+        vehiculoSeleccionado.getState();
 
-        // 3. Selección de Destino
+        // 4. Selección de Destino
         Coordenadas destino = seleccionarDestino(scanner);
 
-        // 4. Simulación del Viaje
-        simularViaje(destino);
+        // 5. Simulación del Viaje
+        simularViaje(destino, scanner);
 
         scanner.close();
+    }
+
+    public static void solicitarNombreCliente(Scanner scanner) {
+        System.out.println("Por favor, ingrese su nombre:");
+        String nombreCliente = scanner.nextLine();
+
+        // Generar un ID aleatorio de 4 letras
+        idCliente = generarIdAleatorio();
+
+        System.out.println("Hola " + nombreCliente + ", tu ID de cliente es: " + idCliente);
+    }
+
+    public static int generarIdAleatorio() {
+        Random random = new Random();
+        return 1000 + random.nextInt(9000);  // Genera un número entre 1000 y 9999
     }
 
     // Método para seleccionar el vehículo
@@ -61,6 +81,8 @@ public class SimuladorViaje {
                 vehiculoSeleccionado = new Carro();
         }
         System.out.println("Has seleccionado: " + vehiculoSeleccionado.getDescripcion());
+        System.out.println(vehiculoSeleccionado.getState());
+        vehiculoSeleccionado.getState();
     }
 
     // Método para modificar el vehículo
@@ -131,11 +153,12 @@ public class SimuladorViaje {
                     default:
                         System.out.println("Aditamento no válido.");
                 }
+                System.out.println(vehiculoSeleccionado.getState());
+                vehiculoSeleccionado.getState();
             }
         }
     }
 
-    // Método para seleccionar el destino
     public static Coordenadas seleccionarDestino(Scanner scanner) {
         System.out.println("Seleccione uno de los puntos de interés:");
 
@@ -157,34 +180,56 @@ public class SimuladorViaje {
         } while (seleccion < 1 || seleccion > destinos.size());
 
         String destinoSeleccionado = destinos.get(seleccion - 1);
-        return zona.obtenerCoordenadas(destinoSeleccionado);
+        return zona.obtenerCoordenadas(destinoSeleccionado);  // Obtener las coordenadas del destino seleccionado
     }
 
+
     // Método para simular el viaje
-    public static void simularViaje(Coordenadas destino) {
-        System.out.println("Iniciando el viaje con el vehículo: " + vehiculoSeleccionado.getDescripcion());
+    public static void simularViaje(Coordenadas destino, Scanner scanner) {
+        vehiculoSeleccionado.setIdClienteActual(idCliente);
+        System.out.println("Por favor, ingrese nuevamente su ID de cliente para iniciar el viaje:");
+        int idIngresado = scanner.nextInt();
+        scanner.nextLine();
 
-        // Simular tiempo de viaje (ejemplo simple)
-        double distancia = calcularDistancia(new Coordenadas(19.432608, -99.133209), destino);
-        double tiempoDeViaje = distancia / 50;  // Asumiendo una velocidad promedio de 50 km/h
-        System.out.println("Distancia: " + distancia + " km");
-        System.out.println("El tiempo estimado de llegada es: " + tiempoDeViaje + " horas");
-        double dist_recorrida = 0;
+        if (vehiculoSeleccionado.verificarIdCliente(idIngresado)) {
+            System.out.println("ID verificado correctamente. Iniciando el viaje con el vehículo: " + vehiculoSeleccionado.getDescripcion());
+            vehiculoSeleccionado.setState(vehiculoSeleccionado.getEnMovimiento());
+            vehiculoSeleccionado.getState();
+            // Simular tiempo de viaje (ejemplo simple)
+            double distancia = calcularDistancia(new Coordenadas(19.432608, -99.133209), destino);
+            double tiempoDeViaje = distancia / 50;  // Asumiendo una velocidad promedio de 50 km/h
+            System.out.println("Distancia: " + distancia + " km");
+            System.out.println("El tiempo estimado de llegada es: " + tiempoDeViaje + " horas");
+            double distanciaRestante = distancia;
 
-        // Consumo de combustible por la distancia recorrida
-        do {
-            if ((vehiculoSeleccionado.calcularKmRestantes()+dist_recorrida) < distancia) {
-                System.out.println("El vehículo no tiene suficiente combustible para completar el viaje.");
-                vehiculoSeleccionado.consumirCombustible(vehiculoSeleccionado.calcularKmRestantes());
-                System.out.println("Debe realizar una parada para recargar combustible.");
-                vehiculoSeleccionado.recargarCombustible();
-                dist_recorrida = dist_recorrida + vehiculoSeleccionado.calcularKmRestantes();
-            } else {
-                vehiculoSeleccionado.consumirCombustible(distancia);
-                System.out.println("El vehículo ha completado el viaje sin problemas.");
-                dist_recorrida=distancia;
+            while (distanciaRestante > 0) {
+                double kmRestantes = vehiculoSeleccionado.calcularKmRestantes();
+
+                if (kmRestantes <= 0) {
+                    System.out.println("El vehículo se quedó sin combustible.");
+                    vehiculoSeleccionado.setState(vehiculoSeleccionado.getAlertaDeCombustible());
+                    vehiculoSeleccionado.getState();
+                    vehiculoSeleccionado.recargarCombustible();
+                }
+                vehiculoSeleccionado.setState(vehiculoSeleccionado.getEnEspera());
+                vehiculoSeleccionado.getState();
+                // Calcular el tramo que se puede recorrer con el combustible disponible o hasta llegar al destino
+                double tramo = Math.min(kmRestantes, distanciaRestante);
+                vehiculoSeleccionado.setState(vehiculoSeleccionado.getEnMovimiento());
+                vehiculoSeleccionado.consumirCombustible(tramo);   // Consumir el combustible necesario para el tramo
+                distanciaRestante -= tramo;
+
+                System.out.println("Avanzó " + tramo + " km. Distancia restante: " + distanciaRestante + " km.");
+
+                if (distanciaRestante <= 0) {
+                    System.out.println("El vehículo ha completado el viaje sin problemas.");
+                    vehiculoSeleccionado.setState(vehiculoSeleccionado.getViajeFinalizado());
+                    vehiculoSeleccionado.getState();
+                }
             }
-        }while (dist_recorrida<distancia);
+        } else {
+            System.out.println("ID incorrecto. No se puede iniciar el viaje.");
+        }
     }
 
     // Método para calcular la distancia entre dos puntos
@@ -193,4 +238,15 @@ public class SimuladorViaje {
         double lonDiff = destino.getLongitud() - origen.getLongitud();
         return Math.sqrt(latDiff * latDiff + lonDiff * lonDiff) * 111;  // Aproximación para convertir grados en km
     }
+
+    // Método para solicitar y establecer el ID del cliente
+    public static void solicitarIdCliente(Scanner scanner) {
+        System.out.println("Por favor, ingrese su ID de cliente:");
+        int idCliente = scanner.nextInt();
+        scanner.nextLine();  // Consumir la nueva línea
+
+        vehiculoSeleccionado.setIdClienteActual(idCliente);
+        System.out.println("ID del cliente registrado.");
+    }
+
 }

@@ -40,4 +40,9 @@ public class ComenzarViaje implements State {
     public void buscarViaje() {
         System.out.println("No se puede buscar otro viaje si hay uno en curso.");
     }
+
+    @Override
+    public String toString() {
+        return "Comenzando viaje";
+    }
 }

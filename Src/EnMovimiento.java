@@ -43,4 +43,9 @@ public class EnMovimiento implements State {
     public void buscarViaje() {
         System.out.println("No se puede buscar un viaje cuando ya se está en uno.");
     }
+
+    @Override
+    public String toString() {
+        return "En Movimiento";
+    }
 }

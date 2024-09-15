@@ -7,20 +7,23 @@ public abstract class VehMos {
     private int cantidadCombustible;
     private double consumoPorKm;
     private double tiempoDeLlegada;
+    private int idClienteActual;
     String descripcion = "Vehiculo Vehmos";
-    
+
+
     private State enEspera;
     private State comenzarViaje;
     private State enMovimiento;
     private State alertaDeCombustible;
     private State viajeFinalizado;
     private State estadoActual;
-    
+
     // Constructor y métodos que comparten todos los vehículos
     public VehMos(int cantidadCombustible, double consumoPorKm) {
         this.cantidadCombustible = cantidadCombustible;
         this.consumoPorKm = consumoPorKm;
         // Inicialización de estados
+
         enEspera = new EnEspera(this);
         comenzarViaje = new ComenzarViaje(this);
         enMovimiento = new EnMovimiento(this);
@@ -96,27 +99,28 @@ public abstract class VehMos {
     public State getEnEspera() {
         return enEspera;
     }
-    
+
     public State getComenzarViaje() {
-        return comenzarViaje;
+        return enMovimiento;//comenzarViaje;
     }
-    
+
     public State getEnMovimiento() {
         return enMovimiento;
     }
-    
+
     public State getAlertaDeCombustible() {
         return alertaDeCombustible;
     }
-    
+
     public State getViajeFinalizado() {
         return viajeFinalizado;
     }
-    
+
     public State getState() {
+        System.out.println("El estado actual del vehículo es: "+ estadoActual);
         return estadoActual;
     }
-    
+
     public void setState(State estado) {
         this.estadoActual = estado;
     }
@@ -156,6 +160,20 @@ public abstract class VehMos {
             cantidadCombustible -= combustibleNecesario;
             System.out.println("Combustible restante: " + cantidadCombustible + " litros/kWh");
         }
+    }
+
+    // Método para asignar un ID al cliente actual
+    public void setIdClienteActual(int idCliente) {
+        this.idClienteActual = idCliente;
+    }
+
+    public int getIdClienteActual() {
+        return idClienteActual;
+    }
+
+    // Método para verificar el ID del cliente
+    public boolean verificarIdCliente(int idCliente) {
+        return this.idClienteActual == idCliente;
     }
 
 }

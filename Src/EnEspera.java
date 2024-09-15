@@ -7,7 +7,7 @@ public class EnEspera implements State {
 
     @Override
     public void verificaID() {
-    
+
         System.out.println("Verificando ID");
         // Si ID es correcto
         vehmos.setState(vehmos.getComenzarViaje());
@@ -41,5 +41,10 @@ public class EnEspera implements State {
     @Override
     public void buscarViaje() {
         System.out.println("No se puede buscar un viaje en el estado EnEspera.");
+    }
+
+    @Override
+    public String toString() {
+        return "En Espera";
     }
 }
